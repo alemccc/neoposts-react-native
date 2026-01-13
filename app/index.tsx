@@ -1,11 +1,11 @@
 import { Text, View } from 'react-native';
 
-const Home = () => {
-  return (
-    <View>
-      <Text>Welcome to the Home Page!</Text>
-    </View>
-  );
-};
+const Index = () => (
+  <View>
+    <Text style={{ fontFamily: 'Montserrat_600SemiBold', fontSize: 24 }}>
+      Hello
+    </Text>
+  </View>
+);
 
-export default Home;
+export default Index;
