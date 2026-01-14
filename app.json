@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "neoposts",
+    "name": "Neoposts",
     "slug": "neoposts",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon.svg",
     "scheme": "neoposts",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
