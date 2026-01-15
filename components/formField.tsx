@@ -4,9 +4,9 @@ import {
   View
 } from 'react-native';
 
-import { Controller } from 'react-hook-form';
-
+import COLORS from '@/constants/colors';
 import { FormFieldType } from '@/constants/types';
+import { Controller } from 'react-hook-form';
 
 const FormField = ({
   name,
@@ -48,19 +48,19 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   errorText: {
-    color: '#dc3545',
+    color: COLORS.red,
     fontSize: 12,
     marginTop: 4,
   },
   textInput: {
     height: 50,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: COLORS.border,
     padding: 10,
     borderRadius: 5,
   },
   textInputError: {
-    borderColor: '#dc3545',
+    borderColor: COLORS.red,
   },
 });
 

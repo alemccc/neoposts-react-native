@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import COLORS from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import TEXT from "@/constants/textConstants";
 
@@ -14,7 +15,7 @@ const Home = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: "#666",
+    color: COLORS.subtitle,
   },
 });
 

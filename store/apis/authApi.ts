@@ -9,7 +9,7 @@ import {
   SignUpResponse
 } from '@/constants/types';
 
-const BASE_URL = 'https://neoposts-backend.herokuapp.com/api/v1';
+const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const authApi = createApi({
   reducerPath: 'authApi',
