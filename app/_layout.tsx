@@ -1,18 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 import {
   Montserrat_600SemiBold,
   Montserrat_700Bold,
   useFonts,
-} from '@expo-google-fonts/montserrat';
-import { Stack } from 'expo-router';
-import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Provider } from 'react-redux';
+} from "@expo-google-fonts/montserrat";
+import { Stack } from "expo-router";
+import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Provider, useSelector } from "react-redux";
 
-import { store } from '../store/store';
+import "@/i18n";
+import { store, type RootState } from "@/store/store";
 
 preventAutoHideAsync();
+
+const RootLayoutNav = () => {
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Protected guard={isAuthenticated}>
+          <Stack.Screen name="(private)" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={!isAuthenticated}>
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+      </Stack>
+    </SafeAreaView>
+  );
+};
 
 const RootLayout = () => {
   const [fontsLoaded] = useFonts({
@@ -31,13 +50,9 @@ const RootLayout = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Provider store={store}>
-        <Stack>
-          <Stack.Screen name="index" />
-        </Stack>
-      </Provider>
-    </SafeAreaView>
+    <Provider store={store}>
+      <RootLayoutNav />
+    </Provider>
   );
 };
 

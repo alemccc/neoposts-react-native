@@ -1,0 +1,17 @@
+{
+  "common": {
+    "appWelcome": "Bienvenido a Neoposts!"
+  },
+  "signUp": {
+    "title": "Neoposts",
+    "subtitle": "Crea tu cuenta",
+    "signUp": "Registrarse",
+    "error": "Error al registrarse. Por favor inténtalo de nuevo.",
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña"
+    }
+  }
+}
