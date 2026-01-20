@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import SecureStorage from 'react-native-fast-secure-storage';
 import Toast from 'react-native-toast-message';
 
 import { useAppDispatch } from '@/hooks/useTypedRedux';
@@ -22,7 +22,7 @@ export const useSignOut = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      AsyncStorage.clear().then(() => {
+      SecureStorage.clearStorage().then(() => {
         dispatch(clearCredentials());
 
         router.replace('/(auth)/SignIn');
