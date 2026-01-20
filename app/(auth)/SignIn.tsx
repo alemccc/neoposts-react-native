@@ -5,13 +5,14 @@ import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useAppDispatch } from '@/hooks/useTypedRedux';
+
 import AuthFooter from '@/components/AuthFooter';
 import Form from '@/components/Form';
 
 import { signInSchema, type SignInFormValues } from '@/constants/validations';
 
 import { useSignInMutation } from '@/store/apis/authApi';
-import { useAppDispatch } from '@/store/hooks';
 import { setCredentials } from '@/store/slices/authSlice';
 
 const SignIn = () => {
