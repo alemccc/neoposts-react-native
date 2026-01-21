@@ -21,4 +21,14 @@ export const signUpSchema = z
     path: ['confirmPassword'],
   });
 
+export const signInSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'Email is required'),
+  password: z
+    .string()
+    .min(1, 'Password is required'),
+});
+
 export type SignUpFormValues = z.infer<typeof signUpSchema>;
+export type SignInFormValues = z.infer<typeof signInSchema>;

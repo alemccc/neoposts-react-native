@@ -1,23 +1,26 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from 'react-native';
 
-import COLORS from "@/constants/colors";
-import { fonts } from "@/constants/fonts";
-import TEXT from "@/constants/textConstants";
+import { useTranslation } from 'react-i18next';
 
-const { appWelcome } = TEXT;
+import COLORS from '@/constants/colors';
+import { fonts } from '@/constants/fonts';
 
-const Home = () => (
-  <View style={styles.container}>
-    <Text style={styles.title}>{appWelcome}</Text>
-  </View>
-);
+const Home = () => {
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{t('common.appWelcome')}</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
   },
   title: {

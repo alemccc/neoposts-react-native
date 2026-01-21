@@ -1,22 +1,36 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 import {
   Montserrat_600SemiBold,
   Montserrat_700Bold,
   useFonts,
-} from "@expo-google-fonts/montserrat";
-import { Stack } from "expo-router";
-import { hideAsync, preventAutoHideAsync } from "expo-splash-screen";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Provider, useSelector } from "react-redux";
+} from '@expo-google-fonts/montserrat';
+import { Stack } from 'expo-router';
+import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Provider, useSelector } from 'react-redux';
 
-import "@/i18n";
-import { store, type RootState } from "@/store/store";
+import { useAppDispatch } from '@/store/hooks';
+import { checkAuthStatus } from '@/store/slices/authSlice';
+import { store, type RootState } from '@/store/store';
+
+import '@/i18n';
 
 preventAutoHideAsync();
 
 const RootLayoutNav = () => {
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, isLoading } = useSelector(
+    (state: RootState) => state.auth,
+  );
+
+  useEffect(() => {
+    dispatch(checkAuthStatus());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

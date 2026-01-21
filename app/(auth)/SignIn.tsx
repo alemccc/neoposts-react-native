@@ -1,61 +1,56 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import AuthFooter from '@/components/AuthFooter';
 import Form from '@/components/Form';
 
-import { signUpSchema, type SignUpFormValues } from '@/constants/validations';
+import { signInSchema, type SignInFormValues } from '@/constants/validations';
 
-import { useSignUpMutation } from '@/store/apis/authApi';
+import { useSignInMutation } from '@/store/apis/authApi';
 import { useAppDispatch } from '@/store/hooks';
 import { setCredentials } from '@/store/slices/authSlice';
 
-const SignUp = () => {
+const SignIn = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState<string | null>(null);
 
-  const signUpFormFields = [
-    { name: 'name', label: t('signUp.fields.name'), secureTextEntry: false },
-    { name: 'email', label: t('signUp.fields.email'), secureTextEntry: false },
+  const signInFormFields = [
     {
-      name: 'password',
-      label: t('signUp.fields.password'),
-      secureTextEntry: true,
+      name: 'email',
+      label: t('signIn.fields.email'),
+      secureTextEntry: false,
     },
     {
-      name: 'confirmPassword',
-      label: t('signUp.fields.confirmPassword'),
+      name: 'password',
+      label: t('signIn.fields.password'),
       secureTextEntry: true,
     },
   ] as const;
 
-  const [signUp, { data, isError, isLoading, isSuccess }] = useSignUpMutation();
+  const [signIn, { data, isError, isLoading, isSuccess }] = useSignInMutation();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormValues>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<SignInFormValues>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
-      name: '',
       email: '',
       password: '',
-      confirmPassword: '',
     },
   });
 
-  const onSubmit = async (data: SignUpFormValues) => {
-    signUp({
-      name: data.name,
+  const onSubmit = async (data: SignInFormValues) => {
+    signIn({
       email: data.email,
       password: data.password,
-      passwordConfirmation: data.confirmPassword,
     });
   };
 
@@ -67,27 +62,27 @@ const SignUp = () => {
 
   useEffect(() => {
     if (isError) {
-      setApiError(t('signUp.error'));
+      setApiError(t('signIn.error'));
     }
   }, [isError, t]);
 
   return (
-    <Form<SignUpFormValues>
+    <Form<SignInFormValues>
       errorMessage={apiError}
-      formFields={signUpFormFields}
+      formFields={signInFormFields}
       onSubmit={handleSubmit(onSubmit)}
       isLoading={isLoading}
       errors={errors}
+      buttonText={t('signIn.signIn')}
       control={control}
-      buttonText={t('signUp.signUp')}
     >
       <AuthFooter
-        text={t('signUp.alreadyRegistered')}
-        linkText={t('signIn.signIn')}
-        onPress={() => router.push('/SignIn')}
+        text={t('signIn.notRegistered')}
+        linkText={t('signUp.signUp')}
+        onPress={() => router.push('/SignUp')}
       />
     </Form>
   );
 };
 
-export default SignUp;
+export default SignIn;

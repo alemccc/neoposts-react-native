@@ -1,9 +1,9 @@
 {
   "common": {
-    "appWelcome": "Welcome to Neoposts!"
+    "appWelcome": "Welcome to Neoposts!",
+    "appName": "Neoposts"
   },
   "signUp": {
-    "title": "Neoposts",
     "subtitle": "Create your account",
     "signUp": "Sign Up",
     "error": "Sign up failed. Please try again.",
@@ -12,6 +12,16 @@
       "email": "Email",
       "password": "Password",
       "confirmPassword": "Confirm Password"
-    }
+    },
+    "alreadyRegistered": "Already have an account? "
+  },
+  "signIn": {
+    "signIn": "Sign In",
+    "error": "Sign in failed. Please try again.",
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "notRegistered": "Not registered yet? "
   }
 }

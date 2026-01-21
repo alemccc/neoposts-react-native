@@ -1,20 +1,24 @@
-import {
-  StyleSheet,
-  Text, TextInput,
-  View
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
+
+import { Controller, FieldValues, Control, Path } from 'react-hook-form';
 
 import COLORS from '@/constants/colors';
-import { FormFieldType } from '@/constants/types';
-import { Controller } from 'react-hook-form';
 
-const FormField = ({
+interface FormFieldType<T extends FieldValues> {
+  name: Path<T>;
+  label: string;
+  errorMessage?: string;
+  secureTextEntry?: boolean;
+  control: Control<T>;
+}
+
+const FormField = <T extends FieldValues>({
   name,
   label,
-  error,
+  errorMessage,
   secureTextEntry = false,
   control,
-}: FormFieldType) => (
+}: FormFieldType<T>) => (
   <View>
     <Controller
       control={control}
@@ -23,7 +27,7 @@ const FormField = ({
         <>
           <Text style={styles.formLabel}>{label}</Text>
           <TextInput
-            style={[styles.textInput, error && styles.textInputError]}
+            style={[styles.textInput, errorMessage && styles.textInputError]}
             onChangeText={onChange}
             value={value}
             secureTextEntry={secureTextEntry}
@@ -34,11 +38,7 @@ const FormField = ({
       )}
     />
 
-    {error && (
-      <Text style={styles.errorText}>
-        {error.message}
-      </Text>
-    )}
+    {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
   </View>
 );
 

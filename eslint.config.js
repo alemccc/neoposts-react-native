@@ -1,6 +1,5 @@
 import js from '@eslint/js';
 import expo from 'eslint-config-expo/flat.js';
-
 export default [
   js.configs.recommended,
   ...expo,
@@ -9,30 +8,36 @@ export default [
     rules: {
       quotes: ['error', 'single'],
       semi: ['error', 'always'],
-      indent: ['error', 2],
       'comma-dangle': ['error', 'always-multiline'],
-      'no-trailing-spaces': 'error',
+      'no-trailing-spaces': [
+        'error',
+        { skipBlankLines: false, ignoreComments: false },
+      ],
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0, maxBOF: 0 }],
+      'eol-last': ['error', 'always'],
       'arrow-parens': ['error', 'always'],
-      'object-curly-spacing': ['error', true],
+      'object-curly-spacing': ['error', 'always'],
+      'max-len': 'off',
+      'operator-linebreak': 'off',
+      'no-multi-spaces': ['error', { ignoreEOLComments: false }],
 
-      eqeqeq: ['error', 'always'],
       curly: ['error', 'all'],
       'no-var': 'error',
       'prefer-const': 'error',
       'object-shorthand': 'error',
       'arrow-body-style': ['error', 'as-needed'],
-
-      'object-curly-newline': [
-        'error',
-        {
-          ImportDeclaration: { minProperties: 3, multiline: true },
-          ExportDeclaration: { minProperties: 3, multiline: true },
-        },
-      ],
+      'object-curly-newline': ['off'],
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
           pathGroups: [
             {
               pattern: 'react',
@@ -44,6 +49,26 @@ export default [
               group: 'external',
               position: 'before',
             },
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '@/constants/**',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '@/store/**',
+              group: 'internal',
+              position: 'after',
+            },
+            {
+              pattern: '@/assets/**',
+              group: 'internal',
+              position: 'after',
+            },
           ],
           pathGroupsExcludedImportTypes: ['react', 'react-native'],
           'newlines-between': 'always',
@@ -53,6 +78,11 @@ export default [
           },
         },
       ],
+
+      // React/JSX specific rules
+      'react/jsx-indent': ['error', 2],
+      'react/jsx-indent-props': ['error', 2],
+      'react/jsx-closing-bracket-location': ['error', 'line-aligned'],
     },
   },
 ];
