@@ -38,7 +38,7 @@ const RootLayoutNav = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={isAuthenticated}>
-          <Stack.Screen name="(private)" />
+          <Stack.Screen name="(tabs)" />
         </Stack.Protected>
 
         <Stack.Protected guard={!isAuthenticated}>

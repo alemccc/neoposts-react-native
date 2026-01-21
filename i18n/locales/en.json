@@ -24,5 +24,14 @@
     },
     "notRegistered": "Not registered yet? "
   },
-  "error": "There was an error. Please try again."
+  "postsList": {
+    "title": "Posts List",
+    "noPosts": "No posts available.",
+    "error": "Failed to load posts."
+  },
+  "error": "There was an error. Please try again.",
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  }
 }

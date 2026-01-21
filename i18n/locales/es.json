@@ -24,5 +24,14 @@
     },
     "notRegistered": "Aún no estás registrado? "
   },
-  "error": "Se produjo un error. Por favor, inténtalo de nuevo."
+  "postsList": {
+    "title": "Lista de publicaciones",
+    "noPosts": "No hay publicaciones disponibles.",
+    "error": "Error al cargar las publicaciones."
+  },
+  "error": "Se produjo un error. Por favor, inténtalo de nuevo.",
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  }
 }
