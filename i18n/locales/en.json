@@ -23,5 +23,6 @@
       "password": "Password"
     },
     "notRegistered": "Not registered yet? "
-  }
+  },
+  "error": "There was an error. Please try again."
 }

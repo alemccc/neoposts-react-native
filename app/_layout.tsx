@@ -8,9 +8,11 @@ import {
 import { Stack } from 'expo-router';
 import { hideAsync, preventAutoHideAsync } from 'expo-splash-screen';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 import { Provider, useSelector } from 'react-redux';
 
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch } from '@/hooks/useTypedRedux';
+
 import { checkAuthStatus } from '@/store/slices/authSlice';
 import { store, type RootState } from '@/store/store';
 
@@ -66,6 +68,7 @@ const RootLayout = () => {
   return (
     <Provider store={store}>
       <RootLayoutNav />
+      <Toast />
     </Provider>
   );
 };

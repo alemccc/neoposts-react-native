@@ -57,6 +57,25 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
+    prepareHeaders: async (headers, { endpoint }) => {
+      if (endpoint === 'signOut') {
+        const accessToken = await SecureStorage.getItem(AUTH_TOKEN_KEY);
+        const uid = await SecureStorage.getItem(UID_KEY);
+        const client = await SecureStorage.getItem(CLIENT_KEY);
+
+        if (accessToken) {
+          headers.set(AUTH_TOKEN_KEY, accessToken);
+        }
+        if (uid) {
+          headers.set(UID_KEY, uid);
+        }
+        if (client) {
+          headers.set(CLIENT_KEY, client);
+        }
+      }
+
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpRequest>({
@@ -79,7 +98,19 @@ export const authApi = createApi({
         camelizeKeys(response) as SignInResponse,
       onQueryStarted: onAuthQueryStarted,
     }),
+    signOut: builder.mutation<void, void>({
+      query: () => ({
+        url: '/users/sign_out',
+        method: 'DELETE',
+        headers: {
+          'Custom-Header': 'some-valu',
+          'Another-Header': 'another-value',
+        },
+      }),
+      transformResponse: (response: void) => camelizeKeys(response) as void,
+    }),
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation, useSignOutMutation } =
+  authApi;

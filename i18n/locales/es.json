@@ -23,5 +23,6 @@
       "password": "Contraseña"
     },
     "notRegistered": "Aún no estás registrado? "
-  }
+  },
+  "error": "Se produjo un error. Por favor, inténtalo de nuevo."
 }
