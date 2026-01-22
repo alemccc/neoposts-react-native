@@ -12,7 +12,7 @@ import Form from '@/components/Form';
 
 import { signInSchema, type SignInFormValues } from '@/constants/validations';
 
-import { useSignInMutation } from '@/store/apis/authApi';
+import { useSignInMutation } from '@/store/apis/api';
 import { setCredentials } from '@/store/slices/authSlice';
 
 const SignIn = () => {

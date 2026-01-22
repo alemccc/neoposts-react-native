@@ -33,5 +33,10 @@
   "pagination": {
     "previous": "Anterior",
     "next": "Siguiente"
+  },
+  "myProfile": {
+    "error": "Error al cargar el perfil.",
+    "followers": "Seguidores",
+    "following": "Siguiendo"
   }
 }

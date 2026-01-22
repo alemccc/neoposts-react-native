@@ -1,15 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { camelizeKeys } from 'humps';
 
 import { GetPostsRequest, GetPostsResponse } from '@/constants/types';
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+import { api } from './api';
 
-export const postsApi = createApi({
-  reducerPath: 'postsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-  }),
+export const postsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.infiniteQuery<GetPostsResponse, GetPostsRequest, number>({
       query: ({ pageParam = 1, queryArg }) => ({
@@ -29,6 +24,7 @@ export const postsApi = createApi({
       },
     }),
   }),
+  overrideExisting: false,
 });
 
 export const { useGetPostsInfiniteQuery } = postsApi;

@@ -15,6 +15,8 @@ export const AUTH_TOKEN_KEY = 'access-token';
 export const UID_KEY = 'uid';
 export const CLIENT_KEY = 'client';
 
+const AUTH_HEADER_ENDPOINTS = ['signOut', 'getMyProfile'];
+
 const saveAuthHeaders = async (headers: Headers) => {
   const accessToken = headers.get(AUTH_TOKEN_KEY);
   const uid = headers.get(UID_KEY);
@@ -53,12 +55,12 @@ const onAuthQueryStarted = async (
   }
 };
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
+export const api = createApi({
+  reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: async (headers, { endpoint }) => {
-      if (endpoint === 'signOut') {
+      if (AUTH_HEADER_ENDPOINTS.includes(endpoint)) {
         const accessToken = await SecureStorage.getItem(AUTH_TOKEN_KEY);
         const uid = await SecureStorage.getItem(UID_KEY);
         const client = await SecureStorage.getItem(CLIENT_KEY);
@@ -112,5 +114,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useSignOutMutation } =
-  authApi;
+export const { useSignUpMutation, useSignInMutation, useSignOutMutation } = api;

@@ -7,7 +7,7 @@ import Toast from 'react-native-toast-message';
 
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 
-import { useSignOutMutation } from '@/store/apis/authApi';
+import { useSignOutMutation } from '@/store/apis/api';
 import { clearCredentials } from '@/store/slices/authSlice';
 
 export const useSignOut = () => {

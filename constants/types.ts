@@ -70,3 +70,25 @@ export interface GetPostsResponse {
   posts: PostData[];
   pagination: PaginationData;
 }
+
+export interface MyPostsData {
+  id: number;
+  title: string;
+  body: string;
+}
+
+interface OtherUsersData {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export interface GetMyProfileResponse {
+  id: number;
+  name: string;
+  email: string;
+  followed: boolean;
+  posts: MyPostsData[];
+  followers: OtherUsersData[];
+  followees: OtherUsersData[];
+}

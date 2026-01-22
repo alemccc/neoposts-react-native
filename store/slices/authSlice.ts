@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SecureStorage from 'react-native-fast-secure-storage';
 
-import { AUTH_TOKEN_KEY, CLIENT_KEY, UID_KEY } from '@/store/apis/authApi';
+import { AUTH_TOKEN_KEY, CLIENT_KEY, UID_KEY } from '@/store/apis/api';
 
 interface AuthState {
   userName: string | null;
