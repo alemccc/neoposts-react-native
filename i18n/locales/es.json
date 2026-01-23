@@ -42,7 +42,8 @@
   },
   "tabs": {
     "posts": "Publicaciones",
-    "myProfile": "Mi Perfil"
+    "myProfile": "Mi Perfil",
+    "users": "Usuarios"
   },
   "createPost": {
     "title": "Crear publicación",
@@ -53,5 +54,11 @@
       "content": "Contenido"
     },
     "submit": "Publicar"
+  },
+  "usersList": {
+    "noUsers": "No hay usuarios disponibles.",
+    "error": "Error al cargar los usuarios.",
+    "following": "Siguiendo",
+    "searchPlaceholder": "Buscar usuarios..."
   }
 }

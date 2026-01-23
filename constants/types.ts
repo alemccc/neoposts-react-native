@@ -109,3 +109,15 @@ export interface CreatePostResponse {
   author: UserData;
   comments: CommentData[];
 }
+
+export interface GetUsersRequest {
+  search?: string;
+  page?: number;
+  perPage?: number;
+}
+
+export interface GetUsersResponse {
+  users: UserData[];
+  followed: UserData[];
+  pagination: PaginationData;
+}

@@ -1,13 +1,13 @@
 import { camelizeKeys, decamelizeKeys } from 'humps';
 
+import { addNewPostToTop } from '@/utils/apiHelpers';
+
 import {
   GetPostsRequest,
   GetPostsResponse,
   CreatePostRequest,
   CreatePostResponse,
 } from '@/constants/types';
-
-import { addNewPostToTop } from '../helpers/apiHelpers';
 
 import { api } from './api';
 

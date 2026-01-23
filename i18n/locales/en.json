@@ -42,7 +42,8 @@
   },
   "tabs": {
     "posts": "Posts",
-    "myProfile": "My Profile"
+    "myProfile": "My Profile",
+    "users": "Users"
   },
   "createPost": {
     "title": "Create Post",
@@ -53,5 +54,11 @@
       "content": "Content"
     },
     "submit": "Submit"
+  },
+  "usersList": {
+    "noUsers": "No users available.",
+    "error": "Failed to load users.",
+    "following": "Following",
+    "searchPlaceholder": "Search users..."
   }
 }
