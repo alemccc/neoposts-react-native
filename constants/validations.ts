@@ -30,5 +30,15 @@ export const signInSchema = z.object({
     .min(1, 'Password is required'),
 });
 
+export const createPostSchema = z.object({
+  title: z
+    .string()
+    .min(1, 'Title is required'),
+  body: z
+    .string()
+    .min(1, 'Body is required'),
+});
+
 export type SignUpFormValues = z.infer<typeof signUpSchema>;
 export type SignInFormValues = z.infer<typeof signInSchema>;
+export type CreatePostFormValues = z.infer<typeof createPostSchema>;

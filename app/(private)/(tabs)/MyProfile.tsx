@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
 
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 
@@ -13,6 +14,7 @@ import COLORS from '@/constants/colors';
 import { useGetMyProfileQuery } from '@/store/apis/usersApi';
 
 const MyProfile = () => {
+  const routes = useRouter();
   const { t } = useTranslation();
   const { data, isLoading, isError } = useGetMyProfileQuery();
 
@@ -45,6 +47,13 @@ const MyProfile = () => {
           <Text style={styles.number}>{data?.followees.length}</Text>
         </View>
       </View>
+
+      <Pressable
+        style={styles.createPostButton}
+        onPress={() => routes.push('/CreatePost')}
+      >
+        <Text>{t('myProfile.createNewPost')}</Text>
+      </Pressable>
 
       <View style={styles.posts}>
         <FlatList
@@ -91,8 +100,18 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   number: {
-    color: COLORS.subtitle,
     fontSize: 16,
+    color: COLORS.blue,
+  },
+  createPostButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.white,
+    borderRadius: 5,
+    width: '50%',
+    borderColor: COLORS.blue,
+    borderWidth: 1,
+    alignItems: 'center',
   },
   posts: {
     flex: 1,

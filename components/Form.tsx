@@ -21,6 +21,7 @@ interface FormFieldType<T extends FieldValues> {
   name: Path<T>;
   label: string;
   secureTextEntry: boolean;
+  multiline?: boolean;
 }
 
 interface FormType<T extends FieldValues> {
@@ -31,6 +32,7 @@ interface FormType<T extends FieldValues> {
   errors: FieldErrors<T>;
   control: Control<T>;
   buttonText: string;
+  title?: string;
   children?: ReactNode;
 }
 
@@ -42,6 +44,7 @@ const Form = <T extends FieldValues>({
   errors,
   control,
   buttonText,
+  title,
   children,
 }: FormType<T>) => {
   const { t } = useTranslation();
@@ -53,9 +56,11 @@ const Form = <T extends FieldValues>({
       contentContainerStyle={styles.scrollContent}
       automaticallyAdjustKeyboardInsets
     >
-      <Text style={styles.title}>{t('common.appName')}</Text>
+      <Text style={styles.title}>
+        {title || t('common.appName')}
+      </Text>
 
-      {formFields.map(({ name, label, secureTextEntry }) => (
+      {formFields.map(({ name, label, secureTextEntry, multiline }) => (
         <FormField<T>
           key={name}
           name={name}
@@ -63,12 +68,15 @@ const Form = <T extends FieldValues>({
           errorMessage={errors?.[name]?.message as string}
           secureTextEntry={secureTextEntry}
           control={control}
+          multiline={multiline}
         />
       ))}
 
       {errorMessage && (
         <View style={styles.apiErrorContainer}>
-          <Text style={styles.apiErrorText}>{errorMessage}</Text>
+          <Text style={styles.apiErrorText}>
+            {errorMessage}
+          </Text>
         </View>
       )}
 
@@ -80,7 +88,9 @@ const Form = <T extends FieldValues>({
         {isLoading ? (
           <ActivityIndicator color={COLORS.black} />
         ) : (
-          <Text style={{ fontSize: 18 }}>{buttonText}</Text>
+          <Text style={{ fontSize: 18 }}>
+            {buttonText}
+          </Text>
         )}
       </Pressable>
 

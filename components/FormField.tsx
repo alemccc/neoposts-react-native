@@ -10,6 +10,7 @@ interface FormFieldType<T extends FieldValues> {
   errorMessage?: string;
   secureTextEntry?: boolean;
   control: Control<T>;
+  multiline?: boolean;
 }
 
 const FormField = <T extends FieldValues>({
@@ -18,6 +19,7 @@ const FormField = <T extends FieldValues>({
   errorMessage,
   secureTextEntry = false,
   control,
+  multiline = false,
 }: FormFieldType<T>) => (
   <View>
     <Controller
@@ -27,12 +29,17 @@ const FormField = <T extends FieldValues>({
         <>
           <Text style={styles.formLabel}>{label}</Text>
           <TextInput
-            style={[styles.textInput, errorMessage && styles.textInputError]}
+            style={[
+              styles.textInput,
+              multiline && styles.textArea,
+              errorMessage && styles.textInputError,
+            ]}
             onChangeText={onChange}
             value={value}
             secureTextEntry={secureTextEntry}
             autoCapitalize={name === 'email' ? 'none' : 'sentences'}
             keyboardType={name === 'email' ? 'email-address' : 'default'}
+            multiline={multiline}
           />
         </>
       )}
@@ -61,6 +68,10 @@ export const styles = StyleSheet.create({
   },
   textInputError: {
     borderColor: COLORS.red,
+  },
+  textArea: {
+    height: 140,
+    textAlignVertical: 'top',
   },
 });
 

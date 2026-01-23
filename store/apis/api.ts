@@ -15,7 +15,7 @@ export const AUTH_TOKEN_KEY = 'access-token';
 export const UID_KEY = 'uid';
 export const CLIENT_KEY = 'client';
 
-const AUTH_HEADER_ENDPOINTS = ['signOut', 'getMyProfile'];
+const AUTH_HEADER_ENDPOINTS = ['signOut', 'getMyProfile', 'createPost'];
 
 const saveAuthHeaders = async (headers: Headers) => {
   const accessToken = headers.get(AUTH_TOKEN_KEY);
@@ -79,6 +79,7 @@ export const api = createApi({
       return headers;
     },
   }),
+  tagTypes: ['MyProfile'],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (credentials) => ({
