@@ -11,15 +11,24 @@ export const postsApi = createApi({
     baseUrl: BASE_URL,
   }),
   endpoints: (builder) => ({
-    getPosts: builder.query<GetPostsResponse, GetPostsRequest>({
-      query: ({ page = 1, perPage = 25, userId = null }) => ({
-        url: `/posts?page=${page}&per_page=${perPage}${userId ? `&user_id=${userId}` : ''}`,
+    getPosts: builder.infiniteQuery<GetPostsResponse, GetPostsRequest, number>({
+      query: ({ pageParam = 1, queryArg }) => ({
+        url: '/posts',
         method: 'GET',
+        params: {
+          page: pageParam,
+          per_page: queryArg?.perPage ?? 25,
+          ...(queryArg?.userId ? { user_id: queryArg.userId } : {}),
+        },
       }),
       transformResponse: (response: GetPostsResponse) =>
         camelizeKeys(response) as GetPostsResponse,
+      infiniteQueryOptions: {
+        initialPageParam: 1,
+        getNextPageParam: (lastPage: GetPostsResponse) => lastPage.pagination?.nextPage,
+      },
     }),
   }),
 });
 
-export const { useGetPostsQuery } = postsApi;
+export const { useGetPostsInfiniteQuery } = postsApi;
