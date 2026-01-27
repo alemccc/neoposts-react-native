@@ -6,7 +6,7 @@ import {
   SignUpRequest,
   SignUpResponse,
   SignInRequest,
-  SignInResponse,
+  UserData,
 } from '@/constants/types';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -88,14 +88,14 @@ export const authApi = createApi({
         camelizeKeys(response) as SignUpResponse,
       onQueryStarted: onAuthQueryStarted,
     }),
-    signIn: builder.mutation<SignInResponse, SignInRequest>({
+    signIn: builder.mutation<UserData, SignInRequest>({
       query: (credentials) => ({
         url: '/users/sign_in',
         method: 'POST',
         body: decamelizeKeys(credentials),
       }),
-      transformResponse: (response: SignInResponse) =>
-        camelizeKeys(response) as SignInResponse,
+      transformResponse: (response: UserData) =>
+        camelizeKeys(response) as UserData,
       onQueryStarted: onAuthQueryStarted,
     }),
     signOut: builder.mutation<void, void>({

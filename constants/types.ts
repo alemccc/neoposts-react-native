@@ -21,13 +21,23 @@ export interface SignInRequest {
   password: string;
 }
 
+export interface UserData {
+  id: number;
+  name: string;
+  email: string;
+  followed: boolean;
+  posts: string[] | PostData[];
+  followers: string[];
+  followees: string[];
+}
+
 export interface CommentData {
   id: number;
   body: string;
   createdAt: string;
   likesCount: number;
   liked: boolean;
-  user: string;
+  user: string | UserData;
 }
 
 export interface PostData {
@@ -37,16 +47,26 @@ export interface PostData {
   publishedAt: string;
   likesCount: number;
   liked: boolean;
-  author: string;
+  author: string | UserData;
   comments: CommentData[];
 }
 
-export interface SignInResponse {
-  id: number;
-  name: string;
-  email: string;
-  followed: boolean;
+export interface GetPostsRequest {
+  page?: number;
+  perPage?: number;
+  userId?: number;
+}
+
+interface PaginationData {
+  currentPage: number;
+  nextPage: number;
+  prevPage: number | null;
+  totalPages: number;
+  totalCount: number;
+  perPage: number;
+}
+
+export interface GetPostsResponse {
   posts: PostData[];
-  followers: string[];
-  followees: string[];
+  pagination: PaginationData;
 }
