@@ -38,7 +38,10 @@
     "error": "Error al cargar el perfil.",
     "followers": "Seguidores",
     "following": "Siguiendo",
-    "createNewPost": "Crear nueva publicación"
+    "createNewPost": "Crear nueva publicación",
+    "posts": "Publicaciones",
+    "notFollowers": "No hay seguidores aún.",
+    "notFollowing": "No hay seguidos aún."
   },
   "tabs": {
     "posts": "Publicaciones",

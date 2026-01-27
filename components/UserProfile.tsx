@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 
-import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
@@ -10,16 +9,21 @@ import { useSelector } from 'react-redux';
 import Loader from '@/components/Loader';
 import MyPost from '@/components/MyPost';
 import Post from '@/components/Post';
+import ProfileTabButtons from '@/components/ProfileTabButtons';
+import Separator from '@/components/Separator';
+import User from '@/components/User';
+import UserProfileHeader from '@/components/UserProfileHeader';
 
+import { type ProfileTabsType, PROFILE_TABS } from '@/constants/appConstants';
 import COLORS from '@/constants/colors';
-import type { PostData } from '@/constants/types';
+import type { PostData, UserShortData } from '@/constants/types';
 
 import { RootState } from '@/store/store';
 
 interface UserProfileProps {
   id?: number;
-  followers?: number;
-  followees?: number;
+  followers?: UserShortData[];
+  followees?: UserShortData[];
   name?: string;
   email?: string;
   posts: PostData[];
@@ -29,18 +33,19 @@ interface UserProfileProps {
 
 const UserProfile = ({
   id,
-  followers = 0,
-  followees = 0,
+  followers,
+  followees,
   name = '',
   email = '',
   posts,
   isLoading = false,
   isError = false,
 }: UserProfileProps) => {
-  const routes = useRouter();
   const { t } = useTranslation();
   const { userId } = useSelector((state: RootState) => state.auth);
   const isMyProfile = id === userId;
+
+  const [selectedTab, setSelectedTab] = useState<ProfileTabsType>(PROFILE_TABS.POSTS);
 
   useEffect(() => {
     if (isError) {
@@ -63,37 +68,61 @@ const UserProfile = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.email}>{email}</Text>
-      </View>
-      <View style={styles.followersContainer}>
-        <View style={styles.separator}>
-          <Text style={styles.label}>{t('profile.followers')}</Text>
-          <Text style={styles.number}>{followers}</Text>
-        </View>
-        <View style={styles.separator}>
-          <Text style={styles.label}>{t('profile.following')}</Text>
-          <Text style={styles.number}>{followees}</Text>
-        </View>
-      </View>
+      <UserProfileHeader
+        followers={followers?.length}
+        followees={followees?.length}
+        name={name}
+        email={email}
+        isMyProfile={isMyProfile}
+      />
 
-      {isMyProfile && (
-        <Pressable
-          style={styles.createPostButton}
-          onPress={() => routes.push('/CreatePost')}
-        >
-          <Text>{t('profile.createNewPost')}</Text>
-        </Pressable>
-    )}
+      <View style={styles.tabSection}>
+        <ProfileTabButtons selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
-      <View style={styles.posts}>
-        <FlatList
-          data={posts}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-          ListEmptyComponent={<Text>{t('postsList.noPosts')}</Text>}
-        />
+        {selectedTab === PROFILE_TABS.POSTS && (
+          <FlatList
+            data={posts}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+            ListEmptyComponent={
+              <Text style={styles.noItemsText}>
+                {t('postsList.noPosts')}
+              </Text>
+            }
+            style={styles.list}
+            ItemSeparatorComponent={Separator}
+          />
+        )}
+
+        {selectedTab === PROFILE_TABS.FOLLOWERS && (
+          <FlatList
+            data={followers}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <User item={item} />}
+            ListEmptyComponent={
+              <Text style={styles.noItemsText}>
+                {t('profile.notFollowers')}
+              </Text>
+            }
+            style={styles.list}
+            ItemSeparatorComponent={Separator}
+          />
+        )}
+
+        {selectedTab === PROFILE_TABS.FOLLOWING && (
+          <FlatList
+            data={followees}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <User item={item} />}
+            ListEmptyComponent={
+              <Text style={styles.noItemsText}>
+                {t('profile.notFollowing')}
+              </Text>
+            }
+            style={styles.list}
+            ItemSeparatorComponent={Separator}
+          />
+        )}
       </View>
     </View>
   );
@@ -105,51 +134,16 @@ export const styles = StyleSheet.create({
     padding: 16,
     gap: 30,
   },
-  header: {
-    gap: 10,
+  noItemsText: {
+    paddingLeft: 10,
   },
-  name: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  email: {
-    fontSize: 16,
-    color: 'gray',
-  },
-  separator: {
-    flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  followersContainer: {
-    flexDirection: 'row',
-    gap: 40,
-    alignItems: 'center',
-  },
-  label: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  number: {
-    fontSize: 16,
-    color: COLORS.blue,
-  },
-  createPostButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: COLORS.white,
-    borderRadius: 5,
-    width: '50%',
-    borderColor: COLORS.blue,
-    borderWidth: 1,
-    alignItems: 'center',
-  },
-  posts: {
+  tabSection: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     borderRadius: 8,
-    padding: 16,
+  },
+  list: {
+    padding: 10,
   },
 });
 
