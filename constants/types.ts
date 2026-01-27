@@ -25,8 +25,8 @@ export interface UserData {
   email: string;
   followed: boolean;
   posts: PostData[];
-  followers: string[];
-  followees: string[];
+  followers: UserShortData[];
+  followees: UserShortData[];
 }
 
 export interface CommentData {
@@ -69,10 +69,11 @@ export interface GetPostsResponse {
   pagination: PaginationData;
 }
 
-interface OtherUsersData {
+export interface UserShortData {
   id: number;
   name: string;
   email: string;
+  followed?: boolean;
 }
 
 export interface GetMyProfileResponse {
@@ -81,8 +82,8 @@ export interface GetMyProfileResponse {
   email: string;
   followed: boolean;
   posts: PostData[];
-  followers: OtherUsersData[];
-  followees: OtherUsersData[];
+  followers: UserShortData[];
+  followees: UserShortData[];
 }
 
 export interface CreatePostRequest {

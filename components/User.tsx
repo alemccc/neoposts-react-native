@@ -4,10 +4,10 @@ import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import COLORS from '@/constants/colors';
-import type { UserData } from '@/constants/types';
+import type { UserShortData } from '@/constants/types';
 
 interface UserProps {
-  item: UserData;
+  item: UserShortData;
 }
 
 const User = ({ item }: UserProps) => {

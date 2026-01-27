@@ -38,7 +38,10 @@
     "error": "Failed to load profile.",
     "followers": "Followers",
     "following": "Following",
-    "createNewPost": "Create New Post"
+    "createNewPost": "Create New Post",
+    "posts": "Posts",
+    "notFollowers": "No followers yet.",
+    "notFollowing": "Not following anyone yet."
   },
   "tabs": {
     "posts": "Posts",
