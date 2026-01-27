@@ -34,7 +34,7 @@
     "previous": "Previous",
     "next": "Next"
   },
-  "myProfile": {
+  "profile": {
     "error": "Failed to load profile.",
     "followers": "Followers",
     "following": "Following",

@@ -13,7 +13,7 @@ import Form from '@/components/Form';
 import { signInSchema, type SignInFormValues } from '@/constants/validations';
 
 import { useSignInMutation } from '@/store/apis/api';
-import { setCredentials } from '@/store/slices/authSlice';
+import { saveSession } from '@/store/slices/authSlice';
 
 const SignIn = () => {
   const { t } = useTranslation();
@@ -57,9 +57,11 @@ const SignIn = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setCredentials(data));
+      dispatch(saveSession(data.data));
+
+      router.replace('/(private)/(tabs)');
     }
-  }, [isSuccess, data, dispatch]);
+  }, [isSuccess, data, dispatch, router]);
 
   useEffect(() => {
     if (isError) {

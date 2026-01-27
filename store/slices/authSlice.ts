@@ -1,9 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SecureStorage from 'react-native-fast-secure-storage';
 
-import { AUTH_TOKEN_KEY, CLIENT_KEY, UID_KEY } from '@/store/apis/api';
+import { UserData } from '@/constants/types';
+
+import {
+  AUTH_TOKEN_KEY,
+  CLIENT_KEY,
+  UID_KEY,
+  USER_ID_KEY,
+} from '@/store/apis/api';
 
 interface AuthState {
+  userId: number | null;
   userName: string | null;
   email: string | null;
   isAuthenticated: boolean;
@@ -11,6 +19,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+  userId: null,
   userName: null,
   email: null,
   isAuthenticated: false,
@@ -24,13 +33,30 @@ export const checkAuthStatus = createAsyncThunk(
       const accessToken = await SecureStorage.getItem(AUTH_TOKEN_KEY);
       const uid = await SecureStorage.getItem(UID_KEY);
       const client = await SecureStorage.getItem(CLIENT_KEY);
+      const userId = await SecureStorage.getItem(USER_ID_KEY);
 
       const isAuthenticated = !!(accessToken && uid && client);
-      dispatch(setAuthStatus(isAuthenticated));
+
+      if (isAuthenticated && userId) {
+        dispatch(setCredentials({ id: Number(userId) }));
+      } else {
+        dispatch(clearCredentials());
+      }
     } catch {
       dispatch(clearCredentials());
-      dispatch(setAuthStatus(false));
     }
+  },
+);
+
+export const saveSession = createAsyncThunk(
+  'auth/saveSession',
+  async (
+    data: UserData,
+    { dispatch },
+  ) => {
+    await SecureStorage.setItem(USER_ID_KEY, data.id.toString());
+
+    dispatch(setCredentials(data));
   },
 );
 
@@ -40,27 +66,23 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ name: string; email: string }>,
+      action: PayloadAction<{ id: number }>,
     ) => {
-      state.userName = action.payload.name;
-      state.email = action.payload.email;
+      state.userId = action.payload.id;
       state.isAuthenticated = true;
       state.isLoading = false;
     },
     clearCredentials: (state) => {
-      state.userName = null;
-      state.email = null;
+      state.userId = null;
       state.isAuthenticated = false;
-      state.isLoading = false;
-    },
-    setAuthStatus: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticated = action.payload;
       state.isLoading = false;
     },
   },
 });
 
-export const { setCredentials, clearCredentials, setAuthStatus } =
-  authSlice.actions;
+export const {
+  setCredentials,
+  clearCredentials,
+} = authSlice.actions;
 
 export default authSlice.reducer;

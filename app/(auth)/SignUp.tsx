@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { router } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -13,10 +13,11 @@ import Form from '@/components/Form';
 import { signUpSchema, type SignUpFormValues } from '@/constants/validations';
 
 import { useSignUpMutation } from '@/store/apis/api';
-import { setCredentials } from '@/store/slices/authSlice';
+import { saveSession } from '@/store/slices/authSlice';
 
 const SignUp = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -62,9 +63,11 @@ const SignUp = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setCredentials(data));
+      dispatch(saveSession(data.data));
+
+      router.replace('/(private)/(tabs)');
     }
-  }, [isSuccess, data, dispatch]);
+  }, [isSuccess, data, dispatch, router]);
 
   useEffect(() => {
     if (isError) {

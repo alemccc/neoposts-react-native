@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Pressable } from 'react-native';
 
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import COLORS from '@/constants/colors';
@@ -11,9 +12,13 @@ interface UserProps {
 
 const User = ({ item }: UserProps) => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <Pressable
+      style={styles.container}
+      onPress={() => router.push(`/User/${item.id}`)}
+    >
       <Text style={styles.name}>{item.name}</Text>
       <Text style={styles.email}>{item.email}</Text>
       {item.followed && (
@@ -21,7 +26,7 @@ const User = ({ item }: UserProps) => {
           {t('usersList.following')}
         </Text>
       )}
-    </View>
+    </Pressable>
   );
 };
 
