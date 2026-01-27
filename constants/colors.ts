@@ -7,6 +7,7 @@ const COLORS = {
   errorBackground: '#f8d7da',
   errorText: '#721c24',
   errorBorder: '#f5c6cb',
+  blue: '#3d73baff',
 };
 
 export default COLORS;

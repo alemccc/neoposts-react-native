@@ -21,12 +21,19 @@ export default [
       'operator-linebreak': 'off',
       'no-multi-spaces': ['error', { ignoreEOLComments: false }],
 
+      'implicit-arrow-linebreak': 'off',
+      'function-paren-newline': 'off',
+      'object-property-newline': 'off',
+      'array-bracket-newline': 'off',
+      'array-element-newline': 'off',
+      'object-curly-newline': 'off',
+      'newline-per-chained-call': 'off',
+
       curly: ['error', 'all'],
       'no-var': 'error',
       'prefer-const': 'error',
       'object-shorthand': 'error',
       'arrow-body-style': ['error', 'as-needed'],
-      'object-curly-newline': ['off'],
       'import/order': [
         'error',
         {

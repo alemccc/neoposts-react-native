@@ -37,6 +37,21 @@
   "myProfile": {
     "error": "Failed to load profile.",
     "followers": "Followers",
-    "following": "Following"
+    "following": "Following",
+    "createNewPost": "Create New Post"
+  },
+  "tabs": {
+    "posts": "Posts",
+    "myProfile": "My Profile"
+  },
+  "createPost": {
+    "title": "Create Post",
+    "error": "Error creating post. Please try again.",
+    "success": "Post created successfully!",
+    "fields": {
+      "title": "Title",
+      "content": "Content"
+    },
+    "submit": "Submit"
   }
 }

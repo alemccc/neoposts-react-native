@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router';
+import { Stack } from 'expo-router';
 
 import { useSignOut } from '@/hooks/useSignOut';
 
@@ -9,23 +9,24 @@ const PrivateLayout = () => {
   const { handleSignOut } = useSignOut();
 
   return (
-    <Tabs
+    <Stack
       screenOptions={{
-        headerLeft: () => (
+        headerRight: () => (
           <Pressable onPress={handleSignOut} style={styles.logOutButton}>
             <Ionicons name="log-out" size={24} color="black" />
           </Pressable>
         ),
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Posts List' }} />
-    </Tabs>
+      <Stack.Screen name="(tabs)" options={{ title: '' }} />
+      <Stack.Screen name="CreatePost" options={{ title: '' }} />
+    </Stack>
   );
 };
 
 const styles = StyleSheet.create({
   logOutButton: {
-    marginLeft: 20,
+    marginLeft: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -37,6 +37,21 @@
   "myProfile": {
     "error": "Error al cargar el perfil.",
     "followers": "Seguidores",
-    "following": "Siguiendo"
+    "following": "Siguiendo",
+    "createNewPost": "Crear nueva publicación"
+  },
+  "tabs": {
+    "posts": "Publicaciones",
+    "myProfile": "Mi Perfil"
+  },
+  "createPost": {
+    "title": "Crear publicación",
+    "error": "Error al crear la publicación. Por favor inténtalo de nuevo.",
+    "success": "Publicación creada con éxito!",
+    "fields": {
+      "title": "Título",
+      "content": "Contenido"
+    },
+    "submit": "Publicar"
   }
 }

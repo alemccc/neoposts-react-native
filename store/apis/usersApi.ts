@@ -7,6 +7,7 @@ import { api } from './api';
 export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getMyProfile: builder.query<GetMyProfileResponse, void>({
+      providesTags: ['MyProfile'],
       query: () => ({
         url: '/users/me',
         method: 'GET',

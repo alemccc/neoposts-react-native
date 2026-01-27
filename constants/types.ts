@@ -92,3 +92,20 @@ export interface GetMyProfileResponse {
   followers: OtherUsersData[];
   followees: OtherUsersData[];
 }
+
+export interface CreatePostRequest {
+  title: string;
+  body: string;
+  publishedAt: string;
+}
+
+export interface CreatePostResponse {
+  id: number;
+  title: string;
+  body: string;
+  publishedAt: string;
+  likesCount: number;
+  liked: boolean;
+  author: UserData;
+  comments: CommentData[];
+}

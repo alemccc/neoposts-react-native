@@ -5,18 +5,24 @@ import {
   Text,
   ActivityIndicator,
   FlatList,
+  Pressable,
   StyleSheet,
 } from 'react-native';
 
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 
+import Loader from '@/components/Loader';
 import Post from '@/components/Post';
+
+import COLORS from '@/constants/colors';
 
 import { useGetPostsInfiniteQuery } from '@/store/apis/postsApi';
 
 const PostsList = () => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   const {
     data,
@@ -47,11 +53,7 @@ const PostsList = () => {
   }, [isError, t]);
 
   if (isLoading) {
-    return (
-      <View style={styles.loader}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loader />;
   }
 
   return (
@@ -71,20 +73,45 @@ const PostsList = () => {
           ) : null
         }
       />
-      <Toast />
+
+      <Pressable
+        style={styles.createPostButton}
+        onPress={() => router.push('/CreatePost')}
+        accessibilityLabel={t('postsList.createPost')}
+        hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
+      >
+        <Text style={styles.createPostButtonLabel}>+</Text>
+      </Pressable>
     </View>
   );
 };
 
 export const styles = StyleSheet.create({
-  loader: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
     padding: 16,
+  },
+  createPostButton: {
+    position: 'absolute',
+    top: 24,
+    right: 24,
+    width: 50,
+    height: 50,
+    borderRadius: '50%',
+    backgroundColor: COLORS.blue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    zIndex: 100,
+  },
+  createPostButtonLabel: {
+    color: COLORS.white,
+    fontSize: 26,
+    marginBottom: 3,
   },
   activityIndicator: {
     marginVertical: 16,

@@ -1,6 +1,13 @@
-import { camelizeKeys } from 'humps';
+import { camelizeKeys, decamelizeKeys } from 'humps';
 
-import { GetPostsRequest, GetPostsResponse } from '@/constants/types';
+import {
+  GetPostsRequest,
+  GetPostsResponse,
+  CreatePostRequest,
+  CreatePostResponse,
+} from '@/constants/types';
+
+import { addNewPostToTop } from '../helpers/apiHelpers';
 
 import { api } from './api';
 
@@ -18,13 +25,30 @@ export const postsApi = api.injectEndpoints({
       }),
       transformResponse: (response: GetPostsResponse) =>
         camelizeKeys(response) as GetPostsResponse,
+      serializeQueryArgs: ({ endpointName }) => endpointName,
+
       infiniteQueryOptions: {
         initialPageParam: 1,
         getNextPageParam: (lastPage: GetPostsResponse) => lastPage.pagination?.nextPage,
+      },
+    }),
+    createPost: builder.mutation<CreatePostResponse, CreatePostRequest>({
+      invalidatesTags: ['MyProfile'],
+      query: (body) => ({
+        url: '/posts',
+        method: 'POST',
+        body: decamelizeKeys(body),
+      }),
+      transformResponse: (response: CreatePostResponse) =>
+        camelizeKeys(response) as CreatePostResponse,
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        const { data } = await queryFulfilled;
+
+        addNewPostToTop(dispatch, postsApi.util.updateQueryData, data);
       },
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetPostsInfiniteQuery } = postsApi;
+export const { useGetPostsInfiniteQuery, useCreatePostMutation } = postsApi;

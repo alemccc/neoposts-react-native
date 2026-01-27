@@ -12,7 +12,7 @@ const MyPost = ({ item }: PostProps) => (
     <Text style={styles.title}>{item.title}</Text>
     <Text style={styles.body}>{item.body}</Text>
 
-    <Text style={styles.id}>{item.id}</Text>
+    <Text style={styles.id}>ID: {item.id}</Text>
   </View>
 );
 
