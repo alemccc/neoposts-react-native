@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
 
 import COLORS from '@/constants/colors';
-import type { MyPostsData } from '@/constants/types';
+import type { PostData } from '@/constants/types';
 
 interface PostProps {
-  item: MyPostsData;
+  item: PostData;
 }
 
 const MyPost = ({ item }: PostProps) => (

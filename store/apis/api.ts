@@ -6,7 +6,7 @@ import {
   SignUpRequest,
   SignUpResponse,
   SignInRequest,
-  UserData,
+  SignInResponse,
 } from '@/constants/types';
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -14,8 +14,14 @@ const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 export const AUTH_TOKEN_KEY = 'access-token';
 export const UID_KEY = 'uid';
 export const CLIENT_KEY = 'client';
+export const USER_ID_KEY = 'user-id';
 
-const AUTH_HEADER_ENDPOINTS = ['signOut', 'getMyProfile', 'createPost'];
+const AUTH_HEADER_ENDPOINTS = [
+  'signOut',
+  'getMyProfile',
+  'createPost',
+  'getUserProfile',
+];
 
 const saveAuthHeaders = async (headers: Headers) => {
   const accessToken = headers.get(AUTH_TOKEN_KEY);
@@ -79,7 +85,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['MyProfile'],
+  tagTypes: ['Profile'],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (credentials) => ({
@@ -91,14 +97,14 @@ export const api = createApi({
         camelizeKeys(response) as SignUpResponse,
       onQueryStarted: onAuthQueryStarted,
     }),
-    signIn: builder.mutation<UserData, SignInRequest>({
+    signIn: builder.mutation<SignInResponse, SignInRequest>({
       query: (credentials) => ({
         url: '/users/sign_in',
         method: 'POST',
         body: decamelizeKeys(credentials),
       }),
-      transformResponse: (response: UserData) =>
-        camelizeKeys(response) as UserData,
+      transformResponse: (response: SignInResponse) =>
+        camelizeKeys(response) as SignInResponse,
       onQueryStarted: onAuthQueryStarted,
     }),
     signOut: builder.mutation<void, void>({

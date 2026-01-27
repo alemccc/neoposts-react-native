@@ -6,14 +6,8 @@ export interface SignUpRequest {
 }
 
 export interface SignUpResponse {
-  allowPasswordChange: boolean;
-  createdAt: string;
-  email: string;
-  id: number;
-  name: string;
-  provider: string;
-  uid: string;
-  updatedAt: string;
+  data: UserData,
+  status: string;
 }
 
 export interface SignInRequest {
@@ -21,12 +15,16 @@ export interface SignInRequest {
   password: string;
 }
 
+export interface SignInResponse {
+  data: UserData;
+}
+
 export interface UserData {
   id: number;
   name: string;
   email: string;
   followed: boolean;
-  posts: string[] | PostData[];
+  posts: PostData[];
   followers: string[];
   followees: string[];
 }
@@ -44,11 +42,11 @@ export interface PostData {
   id: number;
   title: string;
   body: string;
-  publishedAt: string;
-  likesCount: number;
-  liked: boolean;
-  author: string | UserData;
-  comments: CommentData[];
+  publishedAt?: string;
+  likesCount?: number;
+  liked?: boolean;
+  author?: string | UserData;
+  comments?: CommentData[];
 }
 
 export interface GetPostsRequest {
@@ -71,12 +69,6 @@ export interface GetPostsResponse {
   pagination: PaginationData;
 }
 
-export interface MyPostsData {
-  id: number;
-  title: string;
-  body: string;
-}
-
 interface OtherUsersData {
   id: number;
   name: string;
@@ -88,7 +80,7 @@ export interface GetMyProfileResponse {
   name: string;
   email: string;
   followed: boolean;
-  posts: MyPostsData[];
+  posts: PostData[];
   followers: OtherUsersData[];
   followees: OtherUsersData[];
 }
@@ -120,4 +112,8 @@ export interface GetUsersResponse {
   users: UserData[];
   followed: UserData[];
   pagination: PaginationData;
+}
+
+export interface GetUserProfileRequest {
+  userId: number;
 }

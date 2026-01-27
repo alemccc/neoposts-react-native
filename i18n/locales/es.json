@@ -34,7 +34,7 @@
     "previous": "Anterior",
     "next": "Siguiente"
   },
-  "myProfile": {
+  "profile": {
     "error": "Error al cargar el perfil.",
     "followers": "Seguidores",
     "following": "Siguiendo",
