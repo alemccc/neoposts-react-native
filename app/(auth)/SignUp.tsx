@@ -12,7 +12,7 @@ import Form from '@/components/Form';
 
 import { signUpSchema, type SignUpFormValues } from '@/constants/validations';
 
-import { useSignUpMutation } from '@/store/apis/authApi';
+import { useSignUpMutation } from '@/store/apis/api';
 import { setCredentials } from '@/store/slices/authSlice';
 
 const SignUp = () => {

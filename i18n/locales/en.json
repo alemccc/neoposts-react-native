@@ -33,5 +33,10 @@
   "pagination": {
     "previous": "Previous",
     "next": "Next"
+  },
+  "myProfile": {
+    "error": "Failed to load profile.",
+    "followers": "Followers",
+    "following": "Following"
   }
 }
