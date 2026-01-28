@@ -32,7 +32,6 @@ const PostsList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    refetch,
   } = useGetPostsInfiniteQuery({});
 
   const posts = data?.pages.flatMap((page) => page.posts) ?? [];
@@ -66,7 +65,6 @@ const PostsList = () => {
         onEndReached={loadMore}
         onEndReachedThreshold={0.4}
         refreshing={isFetching}
-        onRefresh={refetch}
         ListFooterComponent={
           isFetchingNextPage ? (
             <ActivityIndicator style={styles.activityIndicator} />

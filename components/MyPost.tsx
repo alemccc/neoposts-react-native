@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 
+import LikeButton from '@/components/LikeButton';
+
 import COLORS from '@/constants/colors';
 import type { PostData } from '@/constants/types';
 
@@ -13,6 +15,8 @@ const MyPost = ({ item }: PostProps) => (
     <Text style={styles.body}>{item.body}</Text>
 
     <Text style={styles.id}>ID: {item.id}</Text>
+
+    <LikeButton itemId={item.id} likesCount={item.likesCount} />
   </View>
 );
 
@@ -21,6 +25,7 @@ export const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: COLORS.white,
     borderRadius: 8,
+    gap: 12,
   },
   title: {
     fontWeight: 'bold',
@@ -28,11 +33,9 @@ export const styles = StyleSheet.create({
   },
   body: {
     color: COLORS.subtitle,
-    marginTop: 4,
   },
   id: {
     color: COLORS.border,
-    marginTop: 8,
     fontSize: 12,
   },
 });

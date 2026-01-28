@@ -23,6 +23,9 @@ const AUTH_HEADER_ENDPOINTS = [
   'getUserProfile',
   'followUser',
   'unfollowUser',
+  'checkIfPostIsLiked',
+  'likePost',
+  'unlikePost',
 ];
 
 const saveAuthHeaders = async (headers: Headers) => {
@@ -87,7 +90,7 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Profile', 'MyProfile'],
+  tagTypes: ['Profile', 'MyProfile', 'Post'],
   endpoints: (builder) => ({
     signUp: builder.mutation<SignUpResponse, SignUpRequest>({
       query: (credentials) => ({

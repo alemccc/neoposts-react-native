@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 
+import LikeButton from '@/components/LikeButton';
+
 import COLORS from '@/constants/colors';
 import type { PostData } from '@/constants/types';
 
@@ -11,14 +13,16 @@ const Post = ({ item }: PostProps) => (
   <View style={styles.container}>
     <Text style={styles.title}>{item.title}</Text>
     <Text style={styles.body}>{item.body}</Text>
-    <Text style={styles.author}>
+    <Text style={styles.footer}>
       {typeof item.author === 'string' ? item.author : item.author?.name}
     </Text>
-    <Text style={styles.author}>
+    <Text style={styles.footer}>
       {item.publishedAt
         ? new Date(item.publishedAt).toLocaleDateString('en-US')
         : ''}
     </Text>
+
+    <LikeButton itemId={item.id} likesCount={item.likesCount} />
   </View>
 );
 
@@ -29,6 +33,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: 8,
     elevation: 2,
+    gap: 12,
   },
   title: {
     fontWeight: 'bold',
@@ -36,11 +41,9 @@ export const styles = StyleSheet.create({
   },
   body: {
     color: COLORS.subtitle,
-    marginTop: 4,
   },
-  author: {
+  footer: {
     color: COLORS.border,
-    marginTop: 8,
     fontSize: 12,
   },
 });
