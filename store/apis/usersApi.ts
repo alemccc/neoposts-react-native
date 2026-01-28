@@ -1,34 +1,59 @@
 import { camelizeKeys } from 'humps';
 
 import type {
-  GetMyProfileResponse,
   GetUsersRequest,
   GetUsersResponse,
   GetUserProfileRequest,
   UserData,
+  FollowUnfollowUserRequest,
+  FollowUnfollowUserResponse,
  } from '@/constants/types';
 
 import { api } from './api';
 
 export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getMyProfile: builder.query<GetMyProfileResponse, void>({
-      providesTags: ['Profile'],
+    getMyProfile: builder.query<UserData, void>({
+      providesTags: ['MyProfile'],
       query: () => ({
         url: '/users/me',
         method: 'GET',
       }),
-      transformResponse: (response: GetMyProfileResponse) =>
-        camelizeKeys(response) as GetMyProfileResponse,
+      transformResponse: (response: UserData) =>
+        camelizeKeys(response) as UserData,
     }),
     getUserProfile: builder.query<UserData, GetUserProfileRequest>({
-      providesTags: ['Profile'],
+      providesTags: (_result, _error, arg) => [{ type: 'Profile', id: arg.userId }],
       query: ({ userId }) => ({
         url: `/users/${userId}`,
         method: 'GET',
       }),
       transformResponse: (response: UserData) =>
         camelizeKeys(response) as UserData,
+    }),
+    followUser: builder.mutation<FollowUnfollowUserResponse, FollowUnfollowUserRequest>({
+      invalidatesTags: (_result, _error, arg) => [{
+        type: 'Profile',
+        id: arg.userId,
+      }, 'MyProfile'],
+      query: ({ userId }) => ({
+        url: `/users/${userId}/follow`,
+        method: 'POST',
+      }),
+      transformResponse: (response: FollowUnfollowUserResponse) =>
+        camelizeKeys(response) as FollowUnfollowUserResponse,
+    }),
+    unfollowUser: builder.mutation<FollowUnfollowUserResponse, FollowUnfollowUserRequest>({
+      invalidatesTags: (_result, _error, arg) => [{
+        type: 'Profile',
+        id: arg.userId,
+      }, 'MyProfile'],
+      query: ({ userId }) => ({
+        url: `/users/${userId}/follow`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: FollowUnfollowUserResponse) =>
+        camelizeKeys(response) as FollowUnfollowUserResponse,
     }),
     getUsers: builder.infiniteQuery<GetUsersResponse, GetUsersRequest, number>({
       query: ({ pageParam = 1, queryArg }) => ({
@@ -56,4 +81,6 @@ export const {
   useGetMyProfileQuery,
   useGetUserProfileQuery,
   useGetUsersInfiniteQuery,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
  } = usersApi;

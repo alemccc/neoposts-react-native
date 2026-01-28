@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
 
+import FollowUnfollowButton from '@/components/FollowUnfollowButton';
 import Loader from '@/components/Loader';
 import MyPost from '@/components/MyPost';
 import Post from '@/components/Post';
@@ -16,34 +17,26 @@ import UserProfileHeader from '@/components/UserProfileHeader';
 
 import { type ProfileTabsType, PROFILE_TABS } from '@/constants/appConstants';
 import COLORS from '@/constants/colors';
-import type { PostData, UserShortData } from '@/constants/types';
+import type { PostData, UserData } from '@/constants/types';
 
 import { RootState } from '@/store/store';
 
 interface UserProfileProps {
-  id?: number;
-  followers?: UserShortData[];
-  followees?: UserShortData[];
-  name?: string;
-  email?: string;
-  posts: PostData[];
+  data?: UserData;
   isLoading?: boolean;
+  isFetching?: boolean;
   isError?: boolean;
 }
 
 const UserProfile = ({
-  id,
-  followers,
-  followees,
-  name = '',
-  email = '',
-  posts,
+  data,
   isLoading = false,
+  isFetching = false,
   isError = false,
 }: UserProfileProps) => {
   const { t } = useTranslation();
   const { userId } = useSelector((state: RootState) => state.auth);
-  const isMyProfile = id === userId;
+  const isMyProfile = data?.id === userId;
 
   const [selectedTab, setSelectedTab] = useState<ProfileTabsType>(PROFILE_TABS.POSTS);
 
@@ -69,19 +62,27 @@ const UserProfile = ({
   return (
     <View style={styles.container}>
       <UserProfileHeader
-        followers={followers?.length}
-        followees={followees?.length}
-        name={name}
-        email={email}
+        followers={data?.followers.length}
+        followees={data?.followees.length}
+        name={data?.name}
+        email={data?.email}
         isMyProfile={isMyProfile}
       />
+
+      {!isMyProfile && data?.id && (
+        <FollowUnfollowButton
+          userId={data.id}
+          following={data.followed}
+          isLoadingUser={isFetching}
+        />
+      )}
 
       <View style={styles.tabSection}>
         <ProfileTabButtons selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
         {selectedTab === PROFILE_TABS.POSTS && (
           <FlatList
-            data={posts}
+            data={data?.posts}
             keyExtractor={(item) => item.id.toString()}
             renderItem={renderItem}
             ListEmptyComponent={
@@ -96,7 +97,7 @@ const UserProfile = ({
 
         {selectedTab === PROFILE_TABS.FOLLOWERS && (
           <FlatList
-            data={followers}
+            data={data?.followers}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => <User item={item} />}
             ListEmptyComponent={
@@ -111,7 +112,7 @@ const UserProfile = ({
 
         {selectedTab === PROFILE_TABS.FOLLOWING && (
           <FlatList
-            data={followees}
+            data={data?.followees}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => <User item={item} />}
             ListEmptyComponent={

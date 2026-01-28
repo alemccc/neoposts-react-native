@@ -10,18 +10,19 @@ const User = () => {
   const { id } = useLocalSearchParams();
   const numberId = Number(id);
 
-  const { data, isLoading, isError } = useGetUserProfileQuery({ userId: numberId });
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isError,
+  } = useGetUserProfileQuery({ userId: numberId });
 
   return (
     <View style={styles.container}>
       <UserProfile
-        id={numberId}
-        name={data?.name}
-        email={data?.email}
-        followers={data?.followers}
-        followees={data?.followees}
-        posts={data?.posts || []}
+        data={data}
         isLoading={isLoading}
+        isFetching={isFetching}
         isError={isError}
       />
     </View>

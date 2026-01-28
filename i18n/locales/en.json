@@ -41,7 +41,8 @@
     "createNewPost": "Create New Post",
     "posts": "Posts",
     "notFollowers": "No followers yet.",
-    "notFollowing": "Not following anyone yet."
+    "notFollowing": "Not following anyone yet.",
+    "follow": "Follow"
   },
   "tabs": {
     "posts": "Posts",

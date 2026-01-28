@@ -1,43 +1,82 @@
-import { Text, StyleSheet, Pressable } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  Pressable,
+  View,
+} from 'react-native';
 
 import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+
+import FollowUnfollowButton from '@/components/FollowUnfollowButton';
 
 import COLORS from '@/constants/colors';
 import type { UserShortData } from '@/constants/types';
+
+import { useGetUserProfileQuery } from '@/store/apis/usersApi';
+import { RootState } from '@/store/store';
 
 interface UserProps {
   item: UserShortData;
 }
 
 const User = ({ item }: UserProps) => {
-  const { t } = useTranslation();
   const router = useRouter();
+  const { userId } = useSelector((state: RootState) => state.auth);
+  const isMyProfile = item.id === userId;
+
+  const {
+    data: userData,
+    isFetching: isFetchingUserProfile,
+  } = useGetUserProfileQuery({ userId: item.id });
 
   return (
-    <Pressable
-      style={styles.container}
-      onPress={() => router.push(`/User/${item.id}`)}
-    >
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.email}>{item.email}</Text>
-      {item.followed && (
-        <Text style={styles.followed}>
-          {t('usersList.following')}
+    <View style={styles.container}>
+      <Pressable
+        style={styles.profileLink}
+        onPress={() => router.push(`/User/${item.id}`)}
+      >
+        <Text
+          style={styles.name}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {item.name}
         </Text>
+        <Text
+          style={styles.email}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {item.email}
+        </Text>
+      </Pressable>
+
+      {!isMyProfile && (
+        <FollowUnfollowButton
+          userId={item.id}
+          following={userData?.followed}
+          isLoadingUser={isFetchingUserProfile}
+        />
       )}
-    </Pressable>
+    </View>
   );
 };
 
 export const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 16,
     padding: 12,
-    gap: 10,
-    backgroundColor: COLORS.white,
     borderRadius: 8,
-    elevation: 2,
+    backgroundColor: COLORS.white,
+  },
+  profileLink: {
+    flex: 1,
+    gap: 10,
+    marginRight: 20,
   },
   name: {
     fontWeight: 'bold',
@@ -45,11 +84,6 @@ export const styles = StyleSheet.create({
   },
   email: {
     color: COLORS.subtitle,
-  },
-  followed: {
-    color: COLORS.border,
-    marginTop: 8,
-    fontSize: 12,
   },
 });
 

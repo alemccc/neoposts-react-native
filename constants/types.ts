@@ -76,16 +76,6 @@ export interface UserShortData {
   followed?: boolean;
 }
 
-export interface GetMyProfileResponse {
-  id: number;
-  name: string;
-  email: string;
-  followed: boolean;
-  posts: PostData[];
-  followers: UserShortData[];
-  followees: UserShortData[];
-}
-
 export interface CreatePostRequest {
   title: string;
   body: string;
@@ -117,4 +107,18 @@ export interface GetUsersResponse {
 
 export interface GetUserProfileRequest {
   userId: number;
+}
+
+export interface FollowUnfollowUserRequest {
+  userId: number;
+}
+
+export interface FollowUnfollowUserResponse {
+  id: number;
+  name: string;
+  email: string;
+  followed: boolean;
+  posts: PostData[];
+  followers: UserShortData[];
+  followees: UserShortData[];
 }
