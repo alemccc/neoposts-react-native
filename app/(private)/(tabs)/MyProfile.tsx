@@ -7,12 +7,7 @@ const MyProfile = () => {
 
   return (
     <UserProfile
-      id={data?.id}
-      followers={data?.followers.length}
-      followees={data?.followees.length}
-      name={data?.name}
-      email={data?.email}
-      posts={data?.posts || []}
+      data={data}
       isLoading={isLoading}
       isError={isError}
     />

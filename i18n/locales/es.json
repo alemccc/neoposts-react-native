@@ -41,7 +41,8 @@
     "createNewPost": "Crear nueva publicación",
     "posts": "Publicaciones",
     "notFollowers": "No hay seguidores aún.",
-    "notFollowing": "No hay seguidos aún."
+    "notFollowing": "No hay seguidos aún.",
+    "follow": "Seguir"
   },
   "tabs": {
     "posts": "Publicaciones",

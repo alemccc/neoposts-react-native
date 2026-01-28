@@ -33,7 +33,7 @@ export const postsApi = api.injectEndpoints({
       },
     }),
     createPost: builder.mutation<CreatePostResponse, CreatePostRequest>({
-      invalidatesTags: ['Profile'],
+      invalidatesTags: ['MyProfile'],
       query: (body) => ({
         url: '/posts',
         method: 'POST',
