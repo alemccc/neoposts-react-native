@@ -118,14 +118,14 @@ export const styles = StyleSheet.create({
   },
   number: {
     fontSize: 16,
-    color: COLORS.blue,
+    color: COLORS.primary,
   },
   createPostButton: {
     padding: 10,
     backgroundColor: COLORS.white,
     borderRadius: 5,
     width: '50%',
-    borderColor: COLORS.blue,
+    borderColor: COLORS.primary,
     borderWidth: 1,
     alignItems: 'center',
   },

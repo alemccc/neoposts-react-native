@@ -27,7 +27,14 @@
   "postsList": {
     "title": "Posts List",
     "noPosts": "No posts available.",
-    "error": "Failed to load posts."
+    "error": "Failed to load posts.",
+    "comment": "comment"
+  },
+  "comment": {
+    "addComment": "Add a comment...",
+    "submit": "Submit",
+    "error": "Failed to add comment. Please try again.",
+    "comments": "Comments"
   },
   "camera": {
     "permissionRequired": "Permission required",

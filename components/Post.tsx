@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 
+import CommentsSection from '@/components/CommentsSection';
 import LikeButton from '@/components/LikeButton';
 
 import COLORS from '@/constants/colors';
@@ -14,7 +15,7 @@ const Post = ({ item }: PostProps) => (
     <Text style={styles.title}>{item.title}</Text>
     <Text style={styles.body}>{item.body}</Text>
     <Text style={styles.footer}>
-      {typeof item.author === 'string' ? item.author : item.author?.name}
+      {item.author?.name}
     </Text>
     <Text style={styles.footer}>
       {item.publishedAt
@@ -23,6 +24,8 @@ const Post = ({ item }: PostProps) => (
     </Text>
 
     <LikeButton itemId={item.id} likesCount={item.likesCount} />
+
+    <CommentsSection itemId={item.id} commentsCount={item.comments?.length || 0} />
   </View>
 );
 

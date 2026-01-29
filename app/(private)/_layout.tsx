@@ -21,6 +21,7 @@ const PrivateLayout = () => {
       <Stack.Screen name="(tabs)" options={{ title: '' }} />
       <Stack.Screen name="CreatePost" options={{ title: '' }} />
       <Stack.Screen name="User/[id]" options={{ title: '' }} />
+      <Stack.Screen name="Post/[id]" options={{ title: '' }} />
     </Stack>
   );
 };

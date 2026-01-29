@@ -16,18 +16,6 @@ export const UID_KEY = 'uid';
 export const CLIENT_KEY = 'client';
 export const USER_ID_KEY = 'user-id';
 
-const AUTH_HEADER_ENDPOINTS = [
-  'signOut',
-  'getMyProfile',
-  'createPost',
-  'getUserProfile',
-  'followUser',
-  'unfollowUser',
-  'checkIfPostIsLiked',
-  'likePost',
-  'unlikePost',
-];
-
 const saveAuthHeaders = async (headers: Headers) => {
   const accessToken = headers.get(AUTH_TOKEN_KEY);
   const uid = headers.get(UID_KEY);
@@ -73,7 +61,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: async (headers, { endpoint }) => {
-      if (AUTH_HEADER_ENDPOINTS.includes(endpoint)) {
+      if (endpoint !== 'signUp' && endpoint !== 'signIn') {
         const accessToken = await getItemAsync(AUTH_TOKEN_KEY);
         const uid = await getItemAsync(UID_KEY);
         const client = await getItemAsync(CLIENT_KEY);
