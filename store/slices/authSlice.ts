@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import SecureStorage from 'react-native-fast-secure-storage';
+import { getItemAsync, setItemAsync } from 'expo-secure-store';
 
 import { UserData } from '@/constants/types';
 
@@ -30,10 +30,10 @@ export const checkAuthStatus = createAsyncThunk(
   'auth/checkAuthStatus',
   async (_, { dispatch }) => {
     try {
-      const accessToken = await SecureStorage.getItem(AUTH_TOKEN_KEY);
-      const uid = await SecureStorage.getItem(UID_KEY);
-      const client = await SecureStorage.getItem(CLIENT_KEY);
-      const userId = await SecureStorage.getItem(USER_ID_KEY);
+      const accessToken = await getItemAsync(AUTH_TOKEN_KEY);
+      const uid = await getItemAsync(UID_KEY);
+      const client = await getItemAsync(CLIENT_KEY);
+      const userId = await getItemAsync(USER_ID_KEY);
 
       const isAuthenticated = !!(accessToken && uid && client);
 
@@ -54,7 +54,7 @@ export const saveSession = createAsyncThunk(
     data: UserData,
     { dispatch },
   ) => {
-    await SecureStorage.setItem(USER_ID_KEY, data.id.toString());
+    await setItemAsync(USER_ID_KEY, data.id.toString());
 
     dispatch(setCredentials(data));
   },
