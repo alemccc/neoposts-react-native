@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { setItemAsync, getItemAsync } from 'expo-secure-store';
 import { camelizeKeys, decamelizeKeys } from 'humps';
-import SecureStorage from 'react-native-fast-secure-storage';
 
 import {
   SignUpRequest,
@@ -34,9 +34,11 @@ const saveAuthHeaders = async (headers: Headers) => {
   const client = headers.get(CLIENT_KEY);
 
   if (accessToken && uid && client) {
-    await SecureStorage.setItem(AUTH_TOKEN_KEY, accessToken);
-    await SecureStorage.setItem(UID_KEY, uid);
-    await SecureStorage.setItem(CLIENT_KEY, client);
+    Promise.all([
+      setItemAsync(AUTH_TOKEN_KEY, accessToken),
+      setItemAsync(UID_KEY, uid),
+      setItemAsync(CLIENT_KEY, client),
+    ]);
   }
 };
 
@@ -72,9 +74,9 @@ export const api = createApi({
     baseUrl: BASE_URL,
     prepareHeaders: async (headers, { endpoint }) => {
       if (AUTH_HEADER_ENDPOINTS.includes(endpoint)) {
-        const accessToken = await SecureStorage.getItem(AUTH_TOKEN_KEY);
-        const uid = await SecureStorage.getItem(UID_KEY);
-        const client = await SecureStorage.getItem(CLIENT_KEY);
+        const accessToken = await getItemAsync(AUTH_TOKEN_KEY);
+        const uid = await getItemAsync(UID_KEY);
+        const client = await getItemAsync(CLIENT_KEY);
 
         if (accessToken) {
           headers.set(AUTH_TOKEN_KEY, accessToken);

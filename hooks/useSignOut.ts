@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 import { useRouter } from 'expo-router';
+import { deleteItemAsync } from 'expo-secure-store';
 import { useTranslation } from 'react-i18next';
-import SecureStorage from 'react-native-fast-secure-storage';
 import Toast from 'react-native-toast-message';
 
 import { useAppDispatch } from '@/hooks/useTypedRedux';
@@ -22,7 +22,12 @@ export const useSignOut = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      SecureStorage.clearStorage().then(() => {
+      Promise.all([
+        deleteItemAsync('access-token'),
+        deleteItemAsync('uid'),
+        deleteItemAsync('client'),
+        deleteItemAsync('user-id'),
+      ]).then(() => {
         dispatch(clearCredentials());
 
         router.replace('/(auth)/SignIn');
