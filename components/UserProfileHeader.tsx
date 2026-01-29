@@ -85,8 +85,7 @@ export const styles = StyleSheet.create({
     color: COLORS.blue,
   },
   createPostButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: 10,
     backgroundColor: COLORS.white,
     borderRadius: 5,
     width: '50%',

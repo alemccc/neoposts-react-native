@@ -23,7 +23,7 @@ export const usersApi = api.injectEndpoints({
         camelizeKeys(response) as UserData,
     }),
     getUserProfile: builder.query<UserData, GetUserProfileRequest>({
-      providesTags: (_result, _error, arg) => [{ type: 'Profile', id: arg.userId }],
+      providesTags: (_result, _error, arg) => [{ type: 'Profile', id: arg.userId }, 'Post'],
       query: ({ userId }) => ({
         url: `/users/${userId}`,
         method: 'GET',

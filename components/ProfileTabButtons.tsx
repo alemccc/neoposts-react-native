@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   tabText: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'gray',
     fontWeight: 'bold',
   },
