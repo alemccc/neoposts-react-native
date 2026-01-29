@@ -7,6 +7,8 @@ import {
   GetPostsResponse,
   CreatePostRequest,
   CreatePostResponse,
+  LikePostRequest,
+  LikePostResponse,
 } from '@/constants/types';
 
 import { api } from './api';
@@ -14,6 +16,13 @@ import { api } from './api';
 export const postsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.infiniteQuery<GetPostsResponse, GetPostsRequest, number>({
+      providesTags: (result) =>
+        result ?
+        [...result.pages.flatMap(
+          (page) => page.posts.map((post) => (
+            { type: 'Post' as const, id: post.id }))),
+            { type: 'Post', id: 'LIST' }]
+          : [{ type: 'Post', id: 'LIST' }],
       query: ({ pageParam = 1, queryArg }) => ({
         url: '/posts',
         method: 'GET',
@@ -31,6 +40,39 @@ export const postsApi = api.injectEndpoints({
         initialPageParam: 1,
         getNextPageParam: (lastPage: GetPostsResponse) => lastPage.pagination?.nextPage,
       },
+    }),
+    likePost: builder.mutation<LikePostResponse, LikePostRequest>({
+      invalidatesTags: (_result, _error, arg) => [{
+        type: 'Post',
+        id: arg.postId,
+      }, 'Post'],
+      query: ({ postId }) => ({
+        url: `/posts/${postId}/like`,
+        method: 'POST',
+      }),
+      transformResponse: (response: LikePostResponse) =>
+        camelizeKeys(response) as LikePostResponse,
+    }),
+    unlikePost: builder.mutation<LikePostResponse, LikePostRequest>({
+      invalidatesTags: (_result, _error, arg) => [{
+        type: 'Post',
+        id: arg.postId,
+      }, 'Post'],
+      query: ({ postId }) => ({
+        url: `/posts/${postId}/like`,
+        method: 'DELETE',
+      }),
+      transformResponse: (response: LikePostResponse) =>
+        camelizeKeys(response) as LikePostResponse,
+    }),
+    checkIfPostIsLiked: builder.query<LikePostResponse, LikePostRequest>({
+      providesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.postId }],
+      query: ({ postId }) => ({
+        url: `/posts/${postId}/liked`,
+        method: 'GET',
+      }),
+      transformResponse: (response: LikePostResponse) =>
+        camelizeKeys(response) as LikePostResponse,
     }),
     createPost: builder.mutation<CreatePostResponse, CreatePostRequest>({
       invalidatesTags: ['MyProfile'],
@@ -51,4 +93,10 @@ export const postsApi = api.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useGetPostsInfiniteQuery, useCreatePostMutation } = postsApi;
+export const {
+  useGetPostsInfiniteQuery,
+  useCreatePostMutation,
+  useCheckIfPostIsLikedQuery,
+  useLikePostMutation,
+  useUnlikePostMutation,
+} = postsApi;

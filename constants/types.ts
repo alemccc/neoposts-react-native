@@ -122,3 +122,11 @@ export interface FollowUnfollowUserResponse {
   followers: UserShortData[];
   followees: UserShortData[];
 }
+
+export interface LikePostRequest {
+  postId: number;
+}
+
+export interface LikePostResponse {
+  liked: boolean;
+}
