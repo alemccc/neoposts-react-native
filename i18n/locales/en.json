@@ -29,6 +29,13 @@
     "noPosts": "No posts available.",
     "error": "Failed to load posts."
   },
+  "camera": {
+    "permissionRequired": "Permission required",
+    "permissionToLibrary": "Permission to access the media library is required.",
+    "permissionToCamera": "Permission to access the camera is required.",
+    "takePhoto": "Take Photo",
+    "chooseFromLibrary": "Choose from Library"
+  },
   "error": "There was an error. Please try again.",
   "pagination": {
     "previous": "Previous",

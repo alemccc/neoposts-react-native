@@ -1,9 +1,15 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useState } from 'react';
+
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import ProfileImagePicker from '@/components/ProfileImagePicker';
+
 import COLORS from '@/constants/colors';
+
+import defaultProfilePic from '@/assets/images/default-profile.png';
 
 interface UserProfileProps {
   followers?: number;
@@ -22,13 +28,30 @@ const UserProfileHeader = ({
 }: UserProfileProps) => {
   const routes = useRouter();
   const { t } = useTranslation();
+  const [profileImageUri, setProfileImageUri] = useState<string>('');
 
   return (
     <>
       <View style={styles.header}>
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.email}>{email}</Text>
+        <Image
+          source={profileImageUri ?
+              { uri: profileImageUri }
+              : defaultProfilePic
+            }
+          style={styles.profileImage}
+        />
+
+        <View style={styles.userData}>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.email}>{email}</Text>
+        </View>
       </View>
+
+      {isMyProfile && (
+        <ProfileImagePicker
+          onChange={setProfileImageUri}
+        />
+      )}
 
       <View style={styles.followersContainer}>
         <View style={styles.separator}>
@@ -56,10 +79,23 @@ const UserProfileHeader = ({
 export const styles = StyleSheet.create({
   header: {
     gap: 10,
+    flexDirection: 'row',
+  },
+  userData: {
+    alignItems: 'center',
+    gap: 5,
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    backgroundColor: '#eee',
+    alignSelf: 'center',
   },
   name: {
     fontSize: 30,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   email: {
     fontSize: 16,

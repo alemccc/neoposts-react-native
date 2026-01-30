@@ -29,6 +29,13 @@
     "noPosts": "No hay publicaciones disponibles.",
     "error": "Error al cargar las publicaciones."
   },
+  "camera": {
+    "permissionRequired": "Se requiere permiso",
+    "permissionToLibrary": "Se requiere permiso para acceder a la biblioteca multimedia.",
+    "permissionToCamera": "Se requiere permiso para acceder a la cámara.",
+    "takePhoto": "Tomar foto",
+    "chooseFromLibrary": "Elegir de la biblioteca"
+  },
   "error": "Se produjo un error. Por favor, inténtalo de nuevo.",
   "pagination": {
     "previous": "Anterior",
