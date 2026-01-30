@@ -34,6 +34,7 @@ interface FormType<T extends FieldValues> {
   buttonText: string;
   title?: string;
   children?: ReactNode;
+  onEmailFocus?: () => void;
 }
 
 const Form = <T extends FieldValues>({
@@ -46,6 +47,7 @@ const Form = <T extends FieldValues>({
   buttonText,
   title,
   children,
+  onEmailFocus,
 }: FormType<T>) => {
   const { t } = useTranslation();
 
@@ -69,6 +71,7 @@ const Form = <T extends FieldValues>({
           secureTextEntry={secureTextEntry}
           control={control}
           multiline={multiline}
+          onFocus={name === 'email' ? onEmailFocus : undefined}
         />
       ))}
 

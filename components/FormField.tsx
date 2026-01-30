@@ -11,6 +11,7 @@ interface FormFieldType<T extends FieldValues> {
   secureTextEntry?: boolean;
   control: Control<T>;
   multiline?: boolean;
+  onFocus?: () => void;
 }
 
 const FormField = <T extends FieldValues>({
@@ -20,6 +21,7 @@ const FormField = <T extends FieldValues>({
   secureTextEntry = false,
   control,
   multiline = false,
+  onFocus,
 }: FormFieldType<T>) => (
   <View>
     <Controller
@@ -40,6 +42,7 @@ const FormField = <T extends FieldValues>({
             autoCapitalize={name === 'email' ? 'none' : 'sentences'}
             keyboardType={name === 'email' ? 'email-address' : 'default'}
             multiline={multiline}
+            onFocus={onFocus}
           />
         </>
       )}

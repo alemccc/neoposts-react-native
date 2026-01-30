@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import { useLocalAuth } from '@/hooks/useLocalAuth';
 import { useAppDispatch } from '@/hooks/useTypedRedux';
 
 import AuthFooter from '@/components/AuthFooter';
@@ -20,6 +21,7 @@ const SignIn = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState<string | null>(null);
+  const { authenticate, isAuthenticating, error: localAuthError } = useLocalAuth();
 
   const signInFormFields = [
     {
@@ -48,6 +50,7 @@ const SignIn = () => {
     },
   });
 
+  // Only require Face ID on email focus, not on submit
   const onSubmit = async (data: SignInFormValues) => {
     signIn({
       email: data.email,
@@ -69,15 +72,20 @@ const SignIn = () => {
     }
   }, [isError, t]);
 
+  const handleEmailFocus = async () => {
+    await authenticate('Authenticate to sign in');
+  };
+
   return (
     <Form<SignInFormValues>
-      errorMessage={apiError}
+      errorMessage={apiError || localAuthError}
       formFields={signInFormFields}
       onSubmit={handleSubmit(onSubmit)}
-      isLoading={isLoading}
+      isLoading={isLoading || isAuthenticating}
       errors={errors}
       buttonText={t('signIn.signIn')}
       control={control}
+      onEmailFocus={handleEmailFocus}
     >
       <AuthFooter
         text={t('signIn.notRegistered')}

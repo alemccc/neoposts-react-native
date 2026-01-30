@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.neoposts.ale"
+      "bundleIdentifier": "com.neoposts.ale",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use Face ID to sign in securely"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -20,7 +23,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.neoposts.ale"
     },
     "web": {
       "output": "static",
