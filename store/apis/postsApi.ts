@@ -9,6 +9,10 @@ import {
   CreatePostResponse,
   LikePostRequest,
   LikePostResponse,
+  CommentPostRequest,
+  CommentPostResponse,
+  GetPostRequest,
+  PostData,
 } from '@/constants/types';
 
 import { api } from './api';
@@ -74,6 +78,25 @@ export const postsApi = api.injectEndpoints({
       transformResponse: (response: LikePostResponse) =>
         camelizeKeys(response) as LikePostResponse,
     }),
+    getPost: builder.query<PostData, GetPostRequest>({
+      providesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.postId }],
+      query: ({ postId }) => ({
+        url: `/posts/${postId}`,
+        method: 'GET',
+      }),
+      transformResponse: (response: PostData) =>
+        camelizeKeys(response) as PostData,
+    }),
+    commentPost: builder.mutation<CommentPostResponse, CommentPostRequest>({
+      invalidatesTags: ['Post'],
+      query: ({ postId, body }) => ({
+        url: `/posts/${postId}/comments`,
+        method: 'POST',
+        body: decamelizeKeys({ body }),
+      }),
+      transformResponse: (response: CommentPostResponse) =>
+        camelizeKeys(response) as CommentPostResponse,
+    }),
     createPost: builder.mutation<CreatePostResponse, CreatePostRequest>({
       invalidatesTags: ['MyProfile'],
       query: (body) => ({
@@ -99,4 +122,6 @@ export const {
   useCheckIfPostIsLikedQuery,
   useLikePostMutation,
   useUnlikePostMutation,
+  useCommentPostMutation,
+  useGetPostQuery,
 } = postsApi;

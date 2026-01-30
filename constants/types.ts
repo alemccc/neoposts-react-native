@@ -31,11 +31,10 @@ export interface UserData {
 
 export interface CommentData {
   id: number;
-  body: string;
-  createdAt: string;
+  comment: string;
+  comments: CommentData[];
   likesCount: number;
-  liked: boolean;
-  user: string | UserData;
+  author: UserShortData;
 }
 
 export interface PostData {
@@ -45,7 +44,7 @@ export interface PostData {
   publishedAt?: string;
   likesCount?: number;
   liked?: boolean;
-  author?: string | UserData;
+  author?: UserData;
   comments?: CommentData[];
 }
 
@@ -129,4 +128,22 @@ export interface LikePostRequest {
 
 export interface LikePostResponse {
   liked: boolean;
+}
+
+export interface CommentPostRequest {
+  postId: number;
+  body: string;
+}
+
+export interface CommentPostResponse {
+  id: number;
+  body: string;
+  createdAt: string;
+  likesCount: number;
+  liked: boolean;
+  user: UserData;
+}
+
+export interface GetPostRequest {
+  postId: number;
 }

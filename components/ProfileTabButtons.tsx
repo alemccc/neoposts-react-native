@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: 'transparent',
   },
   tabButtonActive: {
-    borderBottomColor: COLORS.blue,
+    borderBottomColor: COLORS.primary,
     backgroundColor: COLORS.white,
   },
   tabText: {
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   tabTextActive: {
-    color: COLORS.blue,
+    color: COLORS.primary,
   },
 });
 

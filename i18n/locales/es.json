@@ -27,7 +27,14 @@
   "postsList": {
     "title": "Lista de publicaciones",
     "noPosts": "No hay publicaciones disponibles.",
-    "error": "Error al cargar las publicaciones."
+    "error": "Error al cargar las publicaciones.",
+    "comment": "comentario"
+  },
+  "comment": {
+    "addComment": "Agregar un comentario...",
+    "submit": "Enviar",
+    "error": "Error al agregar el comentario. Por favor inténtalo de nuevo.",
+    "comments": "Comentarios"
   },
   "camera": {
     "permissionRequired": "Se requiere permiso",

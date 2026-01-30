@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native';
 
+import CommentsSection from '@/components/CommentsSection';
 import LikeButton from '@/components/LikeButton';
 
 import COLORS from '@/constants/colors';
@@ -17,6 +18,8 @@ const MyPost = ({ item }: PostProps) => (
     <Text style={styles.id}>ID: {item.id}</Text>
 
     <LikeButton itemId={item.id} likesCount={item.likesCount} />
+
+    <CommentsSection itemId={item.id} commentsCount={item.comments?.length || 0} />
   </View>
 );
 

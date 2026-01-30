@@ -53,7 +53,7 @@ const FollowUnfollowButton = ({
         onPress={() => followUser({ userId })}
       >
         {isLoading ? (
-          <ActivityIndicator color={COLORS.blue} />
+          <ActivityIndicator color={COLORS.primary} />
         ) : (
           <Text style={styles.followLabel}>
             {t('profile.follow')}
@@ -66,13 +66,13 @@ const FollowUnfollowButton = ({
 
 export const styles = StyleSheet.create({
   following: {
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.primary,
   },
   followingLabel: {
     color: COLORS.white,
   },
   followLabel: {
-    color: COLORS.blue,
+    color: COLORS.primary,
   },
   button: {
     borderRadius: 4,
@@ -85,7 +85,7 @@ export const styles = StyleSheet.create({
   follow: {
     borderWidth: 1,
     backgroundColor: COLORS.white,
-    borderColor: COLORS.blue,
+    borderColor: COLORS.primary,
   },
 });
 
