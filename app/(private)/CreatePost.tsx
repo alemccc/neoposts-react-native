@@ -5,6 +5,10 @@ import { useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
+import {
+  notificationAsync,
+  NotificationFeedbackType,
+} from 'expo-haptics';
 
 import Form from '@/components/Form';
 
@@ -47,6 +51,8 @@ const CreatePost = () => {
   ] as const;
 
   const onSubmit = async ({ title, body }: CreatePostFormValues) => {
+    notificationAsync(NotificationFeedbackType.Success);
+
     try {
       await createPost({
         title,

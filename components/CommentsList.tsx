@@ -11,6 +11,10 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
+import {
+  notificationAsync,
+  NotificationFeedbackType,
+} from 'expo-haptics';
 
 import Loader from '@/components/Loader';
 
@@ -38,6 +42,7 @@ const CommentsList = ({
     }
 
     commentPost({ postId: post.id, body: comment });
+    notificationAsync(NotificationFeedbackType.Success); 
     setComment('');
   };
 
