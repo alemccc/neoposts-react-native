@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   editPhoto: {
     fontSize: 14,
-    color: COLORS.blue,
+    color: COLORS.primary,
   },
 });
 
