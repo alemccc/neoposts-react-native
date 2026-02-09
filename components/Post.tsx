@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 import CommentsSection from '@/components/CommentsSection';
 import LikeButton from '@/components/LikeButton';
+import Speech from '@/components/Speech';
 
 import COLORS from '@/constants/colors';
 import type { PostData } from '@/constants/types';
@@ -22,6 +23,8 @@ const Post = ({ item }: PostProps) => (
         ? new Date(item.publishedAt).toLocaleDateString('en-US')
         : ''}
     </Text>
+
+    <Speech text={`${item.title}. ${item.body}`} />
 
     <LikeButton itemId={item.id} likesCount={item.likesCount} />
 
