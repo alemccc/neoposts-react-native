@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
 
 import { View, Text, StyleSheet } from 'react-native';
+import {
+  notificationAsync,
+  NotificationFeedbackType,
+} from 'expo-haptics';
 
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +31,8 @@ const LikeButton = ({ itemId, likesCount }: PostProps) => {
   const [unlikePost, { isError: unlikeError }] = useUnlikePostMutation();
 
   const likeUnlikePost = () => {
+    notificationAsync(NotificationFeedbackType.Success); 
+
     if (data?.liked) {
       unlikePost({ postId: itemId });
     } else {

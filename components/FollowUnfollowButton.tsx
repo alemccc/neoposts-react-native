@@ -4,6 +4,10 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
+import {
+  impactAsync,
+  ImpactFeedbackStyle,
+} from 'expo-haptics';
 
 import { useTranslation } from 'react-i18next';
 
@@ -31,13 +35,23 @@ const FollowUnfollowButton = ({
 
   const [unfollowUser, { isLoading: isLoadingUnfollow }] = useUnfollowUserMutation();
 
+  const unfollow = () => {
+    impactAsync(ImpactFeedbackStyle.Soft);
+    unfollowUser({ userId });
+  };
+
+  const follow = () => {
+    impactAsync(ImpactFeedbackStyle.Soft);
+    followUser({ userId });
+  };
+
   const isLoading = isLoadingFollow || isLoadingUnfollow || isLoadingUser;
 
   return (
     following ? (
       <Pressable
         style={[styles.following, styles.button]}
-        onPress={() => unfollowUser({ userId })}
+        onPress={unfollow}
       >
         {isLoading ? (
           <ActivityIndicator color={COLORS.white} />
@@ -50,7 +64,7 @@ const FollowUnfollowButton = ({
     ) : (
       <Pressable
         style={[styles.follow, styles.button]}
-        onPress={() => followUser({ userId })}
+        onPress={follow}
       >
         {isLoading ? (
           <ActivityIndicator color={COLORS.primary} />
